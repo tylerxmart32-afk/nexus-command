@@ -4,8 +4,9 @@ import type { QueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/nexus/client";
 import type { NexusEvent } from "@/lib/nexus/types";
 
-export function useNexusRealtime(queryClient: QueryClient) {
+export function useNexusRealtime(queryClient: QueryClient | undefined) {
   useEffect(() => {
+    if (!queryClient) return;
     const channel = supabase
       .channel("nexus_changes")
       .on(
