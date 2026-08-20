@@ -126,7 +126,7 @@ export function MetricValue({
 }: {
   label: string;
   value: string;
-  subValue?: string;
+  subValue?: string | undefined;
   empty?: boolean;
 }) {
   return (
