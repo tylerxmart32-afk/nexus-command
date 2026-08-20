@@ -7,7 +7,7 @@ import {
   latestKpisQueryOptions,
   tenantsQueryOptions,
 } from "@/lib/nexus/queries";
-import { isHealthy } from "@/lib/nexus/types";
+import { isHealthy } from "./ui-bits";
 
 import { TenantCard } from "./TenantCard";
 import { formatCurrency } from "./ui-bits";
