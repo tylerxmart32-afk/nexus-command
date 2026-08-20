@@ -16,9 +16,7 @@ export function NexusShell({ children }: { children: ReactNode }) {
   const queryClient = router.options.context?.queryClient;
   const [mobileFeedOpen, setMobileFeedOpen] = useState(false);
 
-  if (queryClient) {
-    useNexusRealtime(queryClient);
-  }
+  useNexusRealtime(queryClient);
 
   const handleLogout = async () => {
     if (queryClient) {
