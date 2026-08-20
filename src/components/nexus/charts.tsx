@@ -15,7 +15,7 @@ import type { NexusKpiDaily } from "@/lib/nexus/types";
 
 import { formatCompactCurrency } from "./ui-bits";
 
-function ChartContainer({ children, empty }: { children: React.ReactNode; empty?: boolean }) {
+function ChartContainer({ children, empty }: { children: ReactElement; empty?: boolean }) {
   return (
     <div className="h-48 w-full rounded-lg border border-border bg-card/50 p-3">
       {empty ? (
