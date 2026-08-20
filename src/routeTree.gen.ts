@@ -10,33 +10,64 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedMarginRouteImport } from './routes/_authenticated.margin'
+import { Route as AuthenticatedTenantTenantIdRouteImport } from './routes/_authenticated.tenant.$tenantId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedMarginRoute = AuthenticatedMarginRouteImport.update({
+  id: '/margin',
+  path: '/margin',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedTenantTenantIdRoute =
+  AuthenticatedTenantTenantIdRouteImport.update({
+    id: '/tenant/$tenantId',
+    path: '/tenant/$tenantId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/margin': typeof AuthenticatedMarginRoute
+  '/tenant/$tenantId': typeof AuthenticatedTenantTenantIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/margin': typeof AuthenticatedMarginRoute
+  '/tenant/$tenantId': typeof AuthenticatedTenantTenantIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_authenticated/margin': typeof AuthenticatedMarginRoute
+  '/_authenticated/tenant/$tenantId': typeof AuthenticatedTenantTenantIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/margin' | '/tenant/$tenantId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/margin' | '/tenant/$tenantId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/_authenticated/margin'
+    | '/_authenticated/tenant/$tenantId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +79,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/margin': {
+      id: '/_authenticated/margin'
+      path: '/margin'
+      fullPath: '/margin'
+      preLoaderRoute: typeof AuthenticatedMarginRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/tenant/$tenantId': {
+      id: '/_authenticated/tenant/$tenantId'
+      path: '/tenant/$tenantId'
+      fullPath: '/tenant/$tenantId'
+      preLoaderRoute: typeof AuthenticatedTenantTenantIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedMarginRoute: typeof AuthenticatedMarginRoute
+  AuthenticatedTenantTenantIdRoute: typeof AuthenticatedTenantTenantIdRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedMarginRoute: AuthenticatedMarginRoute,
+  AuthenticatedTenantTenantIdRoute: AuthenticatedTenantTenantIdRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
