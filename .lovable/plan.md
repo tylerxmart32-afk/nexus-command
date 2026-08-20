@@ -33,6 +33,7 @@ Persistent shell: slim top bar (NEXUS wordmark, nav: Fleet / Margin, signed-in e
 ## 3. Tenant Detail (`/tenant/$tenantId`)
 
 - Header: display_name, agent_name, plan badge, live health dot.
+- Default operator email for login: redridge.ai@gmail.com (password delivered separately).
 - 7d / 30d toggle driving three Recharts panels from `nexus_kpis_daily`: client_turns per day (bar), pipeline_usd trend (line), cost_usd per day (bar). Days with no row render as gaps; a fully empty range shows "No data yet".
 - Stat tiles: contacts, companies, deals_open, deals_won (latest day).
 - Health history strip: last 24 `nexus_health` checks as colored ticks (green/red, amber when backup_age_hours > 30) with hover detail.
