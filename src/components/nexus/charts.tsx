@@ -52,7 +52,7 @@ export function ClientTurnsChart({ data }: { data: NexusKpiDaily[] }) {
           labelStyle={{ color: "#8a8f98", fontSize: 10 }}
           formatter={(value: number) => [value, "Client turns"]}
         />
-        <Bar dataKey="turns" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="turns" fill="var(--primary)" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ChartContainer>
   );
@@ -74,7 +74,7 @@ export function PipelineChart({ data }: { data: NexusKpiDaily[] }) {
           labelStyle={{ color: "#8a8f98", fontSize: 10 }}
           formatter={(value: number) => [formatCompactCurrency(value), "Pipeline"]}
         />
-        <Line type="monotone" dataKey="pipeline" stroke="hsl(var(--success))" strokeWidth={2} dot={false} />
+        <Line type="monotone" dataKey="pipeline" stroke="var(--success)" strokeWidth={2} dot={false} />
       </LineChart>
     </ChartContainer>
   );
@@ -96,7 +96,7 @@ export function CostChart({ data }: { data: NexusKpiDaily[] }) {
           labelStyle={{ color: "#8a8f98", fontSize: 10 }}
           formatter={(value: number) => [formatCompactCurrency(value), "Cost"]}
         />
-        <Bar dataKey="cost" fill="hsl(var(--danger))" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="cost" fill="var(--danger)" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ChartContainer>
   );

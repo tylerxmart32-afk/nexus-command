@@ -15,7 +15,6 @@ import {
 
 import { ClientTurnsChart, CostChart, PipelineChart } from "./charts";
 import { HealthStrip } from "./HealthStrip";
-import { LiveFeed } from "./LiveFeed";
 import { formatCurrency, HealthDot, MetricValue, PlanBadge, relativeTime } from "./ui-bits";
 
 export function TenantDetail({ tenantId }: { tenantId: string }) {
