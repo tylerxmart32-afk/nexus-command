@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 import { supabase } from "@/integrations/nexus/client";
 import { NexusShell } from "@/components/nexus/NexusShell";
@@ -21,5 +21,3 @@ function AuthenticatedLayout() {
     </NexusShell>
   );
 }
-
-import { Outlet } from "@tanstack/react-router";
