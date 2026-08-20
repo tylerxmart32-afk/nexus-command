@@ -3,7 +3,7 @@ import { AlertTriangle, Bot, MessageSquare } from "lucide-react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { eventsQueryOptions } from "@/lib/nexus/queries";
+import { eventsQueryOptions, tenantsQueryOptions } from "@/lib/nexus/queries";
 import type { NexusEvent } from "@/lib/nexus/types";
 
 import { relativeTime } from "./ui-bits";
@@ -62,6 +62,8 @@ function EventRow({ event, tenantName }: { event: NexusEvent; tenantName: string
 
 export function LiveFeed() {
   const { data: events, isLoading } = useSuspenseQuery(eventsQueryOptions(50));
+  const { data: tenants } = useSuspenseQuery(tenantsQueryOptions());
+  const tenantNames = new Map(tenants.map((t) => [t.id, t.display_name || t.tenant_key]));
 
   return (
     <div className="flex h-full flex-col">
@@ -83,7 +85,11 @@ export function LiveFeed() {
         ) : (
           <div>
             {events.map((event) => (
-              <EventRow key={event.id} event={event} tenantName={event.tenant_id.slice(0, 8)} />
+              <EventRow
+                key={event.id}
+                event={event}
+                tenantName={tenantNames.get(event.tenant_id) ?? event.tenant_id.slice(0, 8)}
+              />
             ))}
           </div>
         )}
